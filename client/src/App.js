@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import { Register } from './pages';
+import Routes from './routes';
 
 function App() {
   return (
     <>
-      <Register />
+      <Routes />
     </>
   );
 }

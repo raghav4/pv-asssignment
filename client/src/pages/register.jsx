@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { MDBInput } from 'mdbreact';
+import { MDBInput, MDBBtn } from 'mdbreact';
 import axios from 'axios';
 import { Toast } from '../components';
-// import http from '../services/httpService';
 import { apiUrl } from '../config.json';
 
 const Register = () => {
@@ -11,14 +10,21 @@ const Register = () => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [Loading, setLoading] = useState(false);
-  const [error, setError] = useState({ name: '', email: '', phone: '', address: '' });
 
-  const handleChange = (e) => {};
+  const isDisabled = () => {
+    return name === '' && email === '' && phone === '';
+  };
 
   const handleUpdate = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${apiUrl}/user`, { name, email, phone, address });
+      const { data } = await axios.post(`${apiUrl}/user`, {
+        name,
+        email,
+        phone,
+        address,
+      });
       localStorage.setItem('userId', data._id);
       Toast('Success', 'Successfully added details', 'success');
     } catch (ex) {
@@ -26,12 +32,16 @@ const Register = () => {
         Toast('Error', ex.response.data, 'error');
       }
     }
+    setLoading(false);
   };
 
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div className="col-md-6 mt-5 jumbotron ml-3 mr-3" style={{ borderRadius: '2%' }}>
+        <div
+          className="col-md-6 mt-5 jumbotron ml-3 mr-3"
+          style={{ borderRadius: '2%' }}
+        >
           <h3 className="h3-responsive text-center">Register your details</h3>
           <form className="needs-validation" onSubmit={handleUpdate} noValidate>
             <div className="form-group">
@@ -44,13 +54,10 @@ const Register = () => {
                     id={name}
                     name={name}
                     label="Name"
-                    className={error.name !== '' ? 'form-control is-invalid' : ''}
                     icon="user"
                     outline
                     required
-                  >
-                    <div className="invalid-feedback ml-3 pl-3">{error.name}</div>
-                  </MDBInput>
+                  />
                   <MDBInput
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -58,13 +65,10 @@ const Register = () => {
                     id={phone}
                     name={phone}
                     label="Phone Number"
-                    className={error.phone ? 'form-control is-invalid' : ''}
                     icon="phone-alt"
                     outline
                     required
-                  >
-                    <div className="invalid-feedback ml-3 pl-3">ik</div>
-                  </MDBInput>
+                  />
 
                   <MDBInput
                     value={email}
@@ -73,13 +77,10 @@ const Register = () => {
                     id={email}
                     name={email}
                     label="Email"
-                    className={error.email ? 'form-control is-invalid' : ''}
                     icon="envelope-open"
                     outline
                     required
-                  >
-                    <div className="invalid-feedback ml-3 pl-3">ik</div>
-                  </MDBInput>
+                  />
 
                   <MDBInput
                     value={address}
@@ -88,18 +89,27 @@ const Register = () => {
                     id={address}
                     name={address}
                     label="Address"
-                    className={error.address ? 'form-control is-invalid' : ''}
                     icon="address-card"
                     outline
                     required
-                  >
-                    <div className="invalid-feedback ml-3 pl-3">ik</div>
-                  </MDBInput>
+                  />
 
                   <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
-                      Submit
-                    </button>
+                    <MDBBtn
+                      color="unique"
+                      type="submit"
+                      disabled={isDisabled()}
+                    >
+                      {Loading ? (
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        'Register'
+                      )}
+                    </MDBBtn>
                   </div>
                 </div>
               </div>

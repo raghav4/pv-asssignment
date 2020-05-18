@@ -33,16 +33,3 @@ exports.addUser = async (req, res) => {
   await user.save();
   return res.status(200).send(user);
 };
-
-exports.updateUserDetails = async (req, res) => {
-  const { name, email, phone, address } = req.body;
-  const user = await User.findOneAndUpdate(
-    { _id: req.params.id },
-    { name, email, phone, address },
-    { new: true },
-  );
-
-  if (!user) return res.status(404).send('No user found');
-
-  return res.status(200).send(user);
-};
