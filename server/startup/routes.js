@@ -1,5 +1,6 @@
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const welcome = require('../routes/welcome');
 const user = require('../routes/user');
 
 module.exports = (app) => {
@@ -11,4 +12,5 @@ module.exports = (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use('/user', user);
+  app.use('/', welcome);
 };
