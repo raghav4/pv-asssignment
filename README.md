@@ -35,3 +35,13 @@ npm install
 # start the client with npm/yarn
 yarn start
 ```
+
+## Screenshots & Video
+
+![img](https://i.imgur.com/IhXcVVd.png)
+
+![img2](https://i.imgur.com/TFSRDPb.png)
+
+### Video Link
+
+<https://www.dropbox.com/s/b9nzjlq1fci1prl/PretVa%20Assignment.mp4?dl=0>
